@@ -1,3 +1,9 @@
-/include/ "system-conf.dtsi"
-/ {
+/include/ "system-conf.dtsi"                                                                                                                                                                  
+/ {                                                                                                                                                                                           
+  chosen {                                                                                                                                                                                    
+    //bootargs = "earlycon clk_ignore_unsued cpuidle.off=1 root=/dev/nfs nfsroot=10.233.1.133:/mnt/nfsroot,nfsvers=3,tcp,rw ip=10.233.1.188:10.233.1.133::255.255.255.0::eth0";               
+    bootargs = "earlycon clk_ignore_unsued cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.67:/mnt/nfsroot,nfsvers=3,tcp ip=10.233.1.188:10.233.1.67::255.255.255.0::eth0:off";               
+    //bootargs = "earlycon clk_ignore_unsued cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.133:/mnt/nfsroot,nfsvers=3,tcp ip=dhcp rw";                                                      
+    //stdout-path = "serial0:115200n8";                                                                                                                                                       
+  };                                                                                                                                                                                          
 };
