@@ -7,3 +7,152 @@
     //stdout-path = "serial0:115200n8";                                                                                                                                                       
   };                                                                                                                                                                                          
 };
+
+#include <dt-bindings/media/xilinx-vip.h>
+
+&Thermal_Con_1_Fifo_To_Axis {
+  clock-names = "ap_clk";
+  clocks = <&misc_clk_0>;
+  compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
+  reg = <0x0 0x80120000 0x0 0x10000>;
+  reset-gpios = <&gpio 80 1>;
+  xlnx,max-height = <1080>;
+  xlnx,max-width = <1920>;
+  xlnx,ppc = <1>;
+  xlnx,s-axi-ctrl-addr-width = <8>;
+  xlnx,s-axi-ctrl-data-width = <32>;
+  ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    port@1 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <1>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+      thermal_con_1_out: endpoint {
+        remote-endpoint = <&vcap_1_in>;
+      };
+    };
+    port@0 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <0>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+    };
+  };
+};
+
+&Thermal_Con_2_Fifo_To_Axis {
+  clock-names = "ap_clk";
+  clocks = <&misc_clk_0>;
+  compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
+  reg = <0x0 0x80140000 0x0 0x10000>;
+  reset-gpios = <&gpio 82 1>;
+  xlnx,max-height = <1080>;
+  xlnx,max-width = <1920>;
+  xlnx,ppc = <1>;
+  xlnx,s-axi-ctrl-addr-width = <8>;
+  xlnx,s-axi-ctrl-data-width = <32>;
+  ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    port@1 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <1>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+      thermal_con_2_out: endpoint {
+        remote-endpoint = <&vcap_2_in>;
+      };
+    };
+    port@0 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <0>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+    };
+  };
+};
+
+&Thermal_Con_3_Fifo_To_Axis {
+  clock-names = "ap_clk";
+  clocks = <&misc_clk_0>;
+  compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
+  reg = <0x0 0x80160000 0x0 0x10000>;
+  reset-gpios = <&gpio 84 1>;
+  xlnx,max-height = <1080>;
+  xlnx,max-width = <1920>;
+  xlnx,ppc = <1>;
+  xlnx,s-axi-ctrl-addr-width = <8>;
+  xlnx,s-axi-ctrl-data-width = <32>;
+  ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    port@1 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <1>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+      thermal_con_3_out: endpoint {
+        remote-endpoint = <&vcap_3_in>;
+      };
+    };
+    port@0 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <0>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+    };
+  };
+};
+
+&amba_pl {
+  vcap_1 {
+    compatible = "xlnx,video";
+    dma-names = "port0";
+    dmas = <&v_frmbuf_wr_1 0>;
+    ports {
+      #address-cells = <1>;
+      #size-cells = <0>;
+      port@0 {
+        direction = "input";
+        reg = <0>;
+        vcap_1_in: endpoint {
+          remote-endpoint = <&thermal_con_1_out>;
+        };
+      };
+    };
+  };
+  vcap_2 {
+    compatible = "xlnx,video";
+    dma-names = "port0";
+    dmas = <&v_frmbuf_wr_2 0>;
+    ports {
+      #address-cells = <1>;
+      #size-cells = <0>;
+      port@0 {
+        direction = "input";
+        reg = <0>;
+        vcap_2_in: endpoint {
+          remote-endpoint = <&thermal_con_2_out>;
+        };
+      };
+    };
+  };
+  vcap_3 {
+    compatible = "xlnx,video";
+    dma-names = "port0";
+    dmas = <&v_frmbuf_wr_3 0>;
+    ports {
+      #address-cells = <1>;
+      #size-cells = <0>;
+      port@0 {
+        direction = "input";
+        reg = <0>;
+        vcap_3_in: endpoint {
+          remote-endpoint = <&thermal_con_3_out>;
+        };
+      };
+    };
+  };
+};
