@@ -4117,6 +4117,8 @@ CONFIG_Init-manager-systemd=y
 #
 # apps 
 #
+CONFIG_bootscript=y
+# CONFIG_dummy is not set
 CONFIG_r5=y
 
 #

@@ -4,3 +4,5 @@
 CONFIG_gpio-demo
 CONFIG_peekpoke
 CONFIG_r5
+CONFIG_dummy
+CONFIG_bootscript

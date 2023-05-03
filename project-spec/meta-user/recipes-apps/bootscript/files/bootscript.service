@@ -1,0 +1,9 @@
+[Unit]
+Description=bootscript
+  
+[Service]
+ExecStart=/usr/bin/bootscript
+StandardOutput=journal+console
+  
+[Install]
+WantedBy=multi-user.target

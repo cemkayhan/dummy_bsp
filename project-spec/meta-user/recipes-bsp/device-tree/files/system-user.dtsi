@@ -1,7 +1,7 @@
 /include/ "system-conf.dtsi"                                                                                                                                                                  
 / {                                                                                                                                                                                           
   chosen {                                                                                                                                                                                    
-    bootargs = "earlycon clk_ignore_unused cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.67:/mnt/nfsroot,nfsvers=3,tcp ip=10.233.1.188:10.233.1.67::255.255.255.0::eth0:off";               
+    bootargs = "earlycon clk_ignore_unused cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.67:/mnt/nfsroot,nfsvers=3,tcp ip=10.233.1.188:10.233.1.67::255.255.255.0::eth0:off";
   };                                                                                                                                                                                          
 
   aliases {
@@ -15,7 +15,7 @@
 
 &Thermal_Con_1_Vid_Pipeline_Thermal_Con_1_Fifo_To_Axis {
   clock-names = "ap_clk";
-  clocks = <&misc_clk_0>;
+  clocks = <&misc_clk_1>;
   compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
   reg = <0x0 0x80120000 0x0 0x10000>;
   reset-gpios = <&gpio 80 1>;
@@ -47,7 +47,7 @@
 
 &Thermal_Con_2_Vid_Pipeline_Thermal_Con_2_Fifo_To_Axis {
   clock-names = "ap_clk";
-  clocks = <&misc_clk_0>;
+  clocks = <&misc_clk_1>;
   compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
   reg = <0x0 0x80140000 0x0 0x10000>;
   reset-gpios = <&gpio 82 1>;
@@ -79,7 +79,7 @@
 
 &Thermal_Con_3_Vid_Pipeline_Thermal_Con_3_Fifo_To_Axis {
   clock-names = "ap_clk";
-  clocks = <&misc_clk_0>;
+  clocks = <&misc_clk_1>;
   compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
   reg = <0x0 0x80160000 0x0 0x10000>;
   reset-gpios = <&gpio 84 1>;
@@ -98,6 +98,70 @@
       xlnx,video-width = <8>;
       thermal_con_3_out: endpoint {
         remote-endpoint = <&vcap_3_in>;
+      };
+    };
+    port@0 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <0>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+    };
+  };
+};
+
+&Day_Con_1_Vid_Pipeline_Day_Con_1_Fifo_To_Axis {
+  clock-names = "ap_clk";
+  clocks = <&misc_clk_0>;
+  compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
+  reg = <0x0 0x80180000 0x0 0x10000>;
+  reset-gpios = <&gpio 86 1>;
+  xlnx,max-height = <1080>;
+  xlnx,max-width = <1920>;
+  xlnx,ppc = <1>;
+  xlnx,s-axi-ctrl-addr-width = <8>;
+  xlnx,s-axi-ctrl-data-width = <32>;
+  ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    port@1 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <1>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+      day_con_1_out: endpoint {
+        remote-endpoint = <&vcap_4_in>;
+      };
+    };
+    port@0 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <0>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+    };
+  };
+};
+
+&Day_Con_2_Vid_Pipeline_Day_Con_2_Fifo_To_Axis {
+  clock-names = "ap_clk";
+  clocks = <&misc_clk_0>;
+  compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
+  reg = <0x0 0x801a0000 0x0 0x10000>;
+  reset-gpios = <&gpio 88 1>;
+  xlnx,max-height = <1080>;
+  xlnx,max-width = <1920>;
+  xlnx,ppc = <1>;
+  xlnx,s-axi-ctrl-addr-width = <8>;
+  xlnx,s-axi-ctrl-data-width = <32>;
+  ports {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    port@1 {
+      /* Fill the field xlnx,video-format based on user requirement */
+      reg = <1>;
+      xlnx,video-format = <XVIP_VF_YUV_422>;
+      xlnx,video-width = <8>;
+      day_con_2_out: endpoint {
+        remote-endpoint = <&vcap_5_in>;
       };
     };
     port@0 {
@@ -154,6 +218,38 @@
         reg = <0>;
         vcap_3_in: endpoint {
           remote-endpoint = <&thermal_con_3_out>;
+        };
+      };
+    };
+  };
+  vcap_4 {
+    compatible = "xlnx,video";
+    dma-names = "port0";
+    dmas = <&Day_Con_1_Vid_Pipeline_v_frmbuf_wr_4 0>;
+    ports {
+      #address-cells = <1>;
+      #size-cells = <0>;
+      port@0 {
+        direction = "input";
+        reg = <0>;
+        vcap_4_in: endpoint {
+          remote-endpoint = <&day_con_1_out>;
+        };
+      };
+    };
+  };
+  vcap_5 {
+    compatible = "xlnx,video";
+    dma-names = "port0";
+    dmas = <&Day_Con_2_Vid_Pipeline_v_frmbuf_wr_5 0>;
+    ports {
+      #address-cells = <1>;
+      #size-cells = <0>;
+      port@0 {
+        direction = "input";
+        reg = <0>;
+        vcap_5_in: endpoint {
+          remote-endpoint = <&day_con_2_out>;
         };
       };
     };
