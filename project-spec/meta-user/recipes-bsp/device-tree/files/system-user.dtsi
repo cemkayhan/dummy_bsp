@@ -1,16 +1,19 @@
 /include/ "system-conf.dtsi"                                                                                                                                                                  
 / {                                                                                                                                                                                           
   chosen {                                                                                                                                                                                    
-    //bootargs = "earlycon clk_ignore_unsued cpuidle.off=1 root=/dev/nfs nfsroot=10.233.1.133:/mnt/nfsroot,nfsvers=3,tcp,rw ip=10.233.1.188:10.233.1.133::255.255.255.0::eth0";               
-    bootargs = "earlycon clk_ignore_unsued cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.67:/mnt/nfsroot,nfsvers=3,tcp ip=10.233.1.188:10.233.1.67::255.255.255.0::eth0:off";               
-    //bootargs = "earlycon clk_ignore_unsued cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.133:/mnt/nfsroot,nfsvers=3,tcp ip=dhcp rw";                                                      
-    //stdout-path = "serial0:115200n8";                                                                                                                                                       
+    bootargs = "earlycon clk_ignore_unused cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.67:/mnt/nfsroot,nfsvers=3,tcp ip=10.233.1.188:10.233.1.67::255.255.255.0::eth0:off";               
   };                                                                                                                                                                                          
+
+  aliases {
+    /delete-property/ i2c0;
+  };
 };
+
+/delete-node/ &i2c1;
 
 #include <dt-bindings/media/xilinx-vip.h>
 
-&Thermal_Con_1_Fifo_To_Axis {
+&Thermal_Con_1_Vid_Pipeline_Thermal_Con_1_Fifo_To_Axis {
   clock-names = "ap_clk";
   clocks = <&misc_clk_0>;
   compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
@@ -42,7 +45,7 @@
   };
 };
 
-&Thermal_Con_2_Fifo_To_Axis {
+&Thermal_Con_2_Vid_Pipeline_Thermal_Con_2_Fifo_To_Axis {
   clock-names = "ap_clk";
   clocks = <&misc_clk_0>;
   compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
@@ -74,7 +77,7 @@
   };
 };
 
-&Thermal_Con_3_Fifo_To_Axis {
+&Thermal_Con_3_Vid_Pipeline_Thermal_Con_3_Fifo_To_Axis {
   clock-names = "ap_clk";
   clocks = <&misc_clk_0>;
   compatible = "xlnx,v-tpg-8.2", "xlnx,v-tpg-8.0";
@@ -110,7 +113,7 @@
   vcap_1 {
     compatible = "xlnx,video";
     dma-names = "port0";
-    dmas = <&v_frmbuf_wr_1 0>;
+    dmas = <&Thermal_Con_1_Vid_Pipeline_v_frmbuf_wr_1 0>;
     ports {
       #address-cells = <1>;
       #size-cells = <0>;
@@ -126,7 +129,7 @@
   vcap_2 {
     compatible = "xlnx,video";
     dma-names = "port0";
-    dmas = <&v_frmbuf_wr_2 0>;
+    dmas = <&Thermal_Con_2_Vid_Pipeline_v_frmbuf_wr_2 0>;
     ports {
       #address-cells = <1>;
       #size-cells = <0>;
@@ -142,7 +145,7 @@
   vcap_3 {
     compatible = "xlnx,video";
     dma-names = "port0";
-    dmas = <&v_frmbuf_wr_3 0>;
+    dmas = <&Thermal_Con_3_Vid_Pipeline_v_frmbuf_wr_3 0>;
     ports {
       #address-cells = <1>;
       #size-cells = <0>;
@@ -156,3 +159,72 @@
     };
   };
 };
+
+/ {
+  reserved-memory {
+    #address-cells = <2>;
+    #size-cells = <2>;
+    ranges;
+    rproc_0_reserved: rproc@7fe00000 {
+      no-map;
+      reg = <0x0 0x7fe00000 0x0 0x100000>;
+    };
+  };
+
+  tcm_0a@ffe00000 {
+    no-map;
+    reg = <0x0 0xffe00000 0x0 0x10000>;
+    phandle = <0x40>;
+    status = "okay";
+    compatible = "mmio-sram";
+    power-domain = <&zynqmp_firmware 15>;
+  };
+  
+  tcm_0b@ffe20000 {
+    no-map;
+    reg = <0x0 0xffe20000 0x0 0x10000>;
+    phandle = <0x41>;
+    status = "okay";
+    compatible = "mmio-sram";
+    power-domain = <&zynqmp_firmware 16>;
+  };
+  
+  rf5ss@ff9a0000 {
+    compatible = "xlnx,zynqmp-r5-remoteproc";
+    xlnx,cluster-mode = <1>;
+    ranges;
+    reg = <0x0 0xFF9A0000 0x0 0x10000>;
+    #address-cells = <0x2>;
+    #size-cells = <0x2>;
+  
+    r5f_0 {
+      compatible = "xilinx,r5f";
+      #address-cells = <2>;
+      #size-cells = <2>;
+      ranges;
+      sram = <0x40 0x41>;
+      memory-region = <&rproc_0_reserved>;
+      power-domain = <&zynqmp_firmware 7>;
+      mboxes = <&ipi_mailbox_rpu0 0>, <&ipi_mailbox_rpu0 1>;
+      mbox-names = "tx", "rx";
+    };
+  };
+  
+  zynqmp_ipi1 {
+    compatible = "xlnx,zynqmp-ipi-mailbox";
+    interrupt-parent = <&gic>;
+    interrupts = <0 29 4>;
+    xlnx,ipi-id = <7>;
+    #address-cells = <1>;
+    #size-cells = <1>;
+    ranges;
+  
+    /* APU<->RPU0 IPI mailbox controller */
+    ipi_mailbox_rpu0: mailbox@ff990600 {
+      reg = <0xff990600 0x20>, <0xff990620 0x20>, <0xff9900c0 0x20>, <0xff9900e0 0x20>;
+      reg-names = "local_request_region", "local_response_region", "remote_request_region", "remote_response_region";
+      #mbox-cells = <1>;
+      xlnx,ipi-id = <1>;
+    };
+  };
+}; 

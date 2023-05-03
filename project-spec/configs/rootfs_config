@@ -870,15 +870,15 @@ CONFIG_pciutils=y
 #
 # vim 
 #
-# CONFIG_vim is not set
+CONFIG_vim=y
 # CONFIG_vim-help is not set
 # CONFIG_vim-dbg is not set
-# CONFIG_vim-vimrc is not set
+CONFIG_vim-vimrc=y
 # CONFIG_vim-dev is not set
 # CONFIG_vim-tutor is not set
-# CONFIG_vim-tools is not set
-# CONFIG_vim-common is not set
-# CONFIG_vim-syntax is not set
+CONFIG_vim-tools=y
+CONFIG_vim-common=y
+CONFIG_vim-syntax=y
 
 #
 # zip 
@@ -3165,14 +3165,14 @@ CONFIG_tcf-agent=y
 #
 # v4l-utils 
 #
-# CONFIG_v4l-utils is not set
-# CONFIG_libv4l is not set
+CONFIG_v4l-utils=y
+CONFIG_libv4l=y
 # CONFIG_ir-keytable is not set
-# CONFIG_media-ctl is not set
+CONFIG_media-ctl=y
 # CONFIG_v4l-utils-dbg is not set
 # CONFIG_rc-keymaps is not set
-# CONFIG_v4l-utils-dev is not set
-# CONFIG_libv4l-dev is not set
+CONFIG_v4l-utils-dev=y
+CONFIG_libv4l-dev=y
 
 #
 # valgrind
@@ -3415,7 +3415,7 @@ CONFIG_watchdog-init=y
 #
 # yavta 
 #
-# CONFIG_yavta is not set
+CONFIG_yavta=y
 # CONFIG_yavta-dbg is not set
 # CONFIG_yavta-dev is not set
 
@@ -4020,9 +4020,9 @@ CONFIG_packagegroup-petalinux-gstreamer=y
 #
 # packagegroup-petalinux-openamp 
 #
-# CONFIG_packagegroup-petalinux-openamp is not set
-# CONFIG_packagegroup-petalinux-openamp-dev is not set
-# CONFIG_packagegroup-petalinux-openamp-dbg is not set
+CONFIG_packagegroup-petalinux-openamp=y
+CONFIG_packagegroup-petalinux-openamp-dev=y
+CONFIG_packagegroup-petalinux-openamp-dbg=y
 
 #
 # packagegroup-petalinux-opencv 
@@ -4070,7 +4070,7 @@ CONFIG_packagegroup-petalinux-gstreamer=y
 #
 # packagegroup-petalinux-v4lutils 
 #
-# CONFIG_packagegroup-petalinux-v4lutils is not set
+CONFIG_packagegroup-petalinux-v4lutils=y
 # CONFIG_packagegroup-petalinux-v4lutils-dbg is not set
 # CONFIG_packagegroup-petalinux-v4lutils-dev is not set
 
@@ -4109,10 +4109,15 @@ CONFIG_imagefeature-ssh-server-dropbear=y
 # CONFIG_imagefeature-ssh-server-openssh is not set
 CONFIG_imagefeature-hwcodecs=y
 # CONFIG_imagefeature-package-management is not set
-# CONFIG_imagefeature-debug-tweaks is not set
-# CONFIG_auto-login is not set
+CONFIG_imagefeature-debug-tweaks=y
+CONFIG_auto-login=y
 CONFIG_Init-manager-systemd=y
 # CONFIG_Init-manager-sysvinit is not set
+
+#
+# apps 
+#
+CONFIG_r5=y
 
 #
 # user packages 
