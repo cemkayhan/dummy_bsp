@@ -4119,6 +4119,7 @@ CONFIG_Init-manager-systemd=y
 #
 CONFIG_bootscript=y
 # CONFIG_dummy is not set
+CONFIG_pipelines=y
 CONFIG_r5=y
 
 #

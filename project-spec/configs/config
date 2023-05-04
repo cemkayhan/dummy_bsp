@@ -297,4 +297,5 @@ CONFIG_YOCTO_BUILDTOOLS_EXTENDED=y
 #
 CONFIG_USER_LAYER_0=""
 
+
 CONFIG_SUBSYSTEM_BOOTARGS_GENERATED=" earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/nfs nfsroot=10.230.1.90:/mnt/nfsroot,tcp ip=dhcp rw cma=1000M"

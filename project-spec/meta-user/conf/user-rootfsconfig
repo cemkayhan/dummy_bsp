@@ -6,3 +6,4 @@ CONFIG_peekpoke
 CONFIG_r5
 CONFIG_dummy
 CONFIG_bootscript
+CONFIG_pipelines
