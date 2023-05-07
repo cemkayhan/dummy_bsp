@@ -14,6 +14,8 @@ SRC_URI = "file://dahua_pipeline_0 \
            file://econ_pipeline_0.1 \
            file://econ_pipeline_1 \
            file://econ_pipeline_1.1 \
+           file://econ_pipeline_2 \
+           file://econ_pipeline_2.1 \
 	"
 
 S = "${WORKDIR}"
@@ -27,4 +29,6 @@ do_install() {
 	     install -m 0755 ${S}/econ_pipeline_0.1 ${D}/${bindir}
 	     install -m 0755 ${S}/econ_pipeline_1 ${D}/${bindir}
 	     install -m 0755 ${S}/econ_pipeline_1.1 ${D}/${bindir}
+	     install -m 0755 ${S}/econ_pipeline_2 ${D}/${bindir}
+	     install -m 0755 ${S}/econ_pipeline_2.1 ${D}/${bindir}
 }

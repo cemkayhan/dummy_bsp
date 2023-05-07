@@ -1,6 +1,6 @@
 #!/bin/sh
 
-media-ctl -d /dev/media4 --set-v4l '"80160000.Dahua_Fifo_To_Axis":0 [fmt:UYVY8_1X16/640x512]'
-gst-launch-1.0 -v v4l2src device=/dev/video3 io-mode=4 ! video/x-raw,format=UYVY,width=640,height=512,framerate=25/1 ! tee name=t \
+media-ctl -d /dev/media5 --set-v4l '"80160000.Dahua_Fifo_To_Axis":0 [fmt:UYVY8_1X16/640x512]'
+gst-launch-1.0 -v v4l2src device=/dev/video2 io-mode=4 ! video/x-raw,format=UYVY,width=640,height=512,framerate=25/1 ! tee name=t \
 t. ! queue ! fpsdisplaysink video-sink=fakesink sync=false \
 t. ! queue ! rtpvrawpay ! udpsink host=10.233.1.222 port=5004
