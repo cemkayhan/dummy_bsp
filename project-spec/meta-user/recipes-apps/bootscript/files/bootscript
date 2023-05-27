@@ -1,4 +1,35 @@
-#!/bin/sh
+#!/usr/bin/tclsh
 
-ifconfig eth0 down && ifconfig eth0 mtu 9000 up
+set b0 [format %02X [exec i2cget -y 1 0x50 0xFA]]
+set b1 [format %02X [exec i2cget -y 1 0x50 0xFB]]
+set b2 [format %02X [exec i2cget -y 1 0x50 0xFC]]
+set b3 [format %02X [exec i2cget -y 1 0x50 0xFD]]
+set b4 [format %02X [exec i2cget -y 1 0x50 0xFE]]
+set b5 [format %02X [exec i2cget -y 1 0x50 0xFF]]
+set plMac ${b0}:${b1}:${b2}:${b3}:${b4}:${b5}
 
+set b0 [format %02X [exec i2cget -y 1 0x53 0xFA]]
+set b1 [format %02X [exec i2cget -y 1 0x53 0xFB]]
+set b2 [format %02X [exec i2cget -y 1 0x53 0xFC]]
+set b3 [format %02X [exec i2cget -y 1 0x53 0xFD]]
+set b4 [format %02X [exec i2cget -y 1 0x53 0xFE]]
+set b5 [format %02X [exec i2cget -y 1 0x53 0xFF]]
+set psMac ${b0}:${b1}:${b2}:${b3}:${b4}:${b5}
+
+exec ip link set dev eth0 down >@ stdout
+exec ip link set dev eth0 mtu 16000 >@ stdout
+exec ip link set dev eth0 address $plMac >@ stdout
+exec ip link set dev eth0 up >@ stdout
+exec ip a add 10.247.1.188/24 dev eth0 >@ stdout
+
+exec ip link set dev eth1 down >@ stdout
+exec ip link set dev eth1 mtu 16000 >@ stdout
+exec ip link set dev eth1 address $psMac >@stdout
+exec ip link set dev eth1 up >@ stdout
+
+source /usr/bin/econ_init_0
+source /usr/bin/econ_init_1
+source /usr/bin/econ_init_2
+source /usr/bin/econ_init_0
+source /usr/bin/econ_init_1
+source /usr/bin/econ_init_2

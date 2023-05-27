@@ -10,12 +10,21 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 SRC_URI = "file://dahua_pipeline_0 \
            file://dahua_pipeline_1 \
            file://dahua_pipeline_2 \
+           file://dahua_h264_pipeline_0 \
+           file://dahua_h264_pipeline_1 \
+           file://dahua_h264_pipeline_2 \
+           file://dahua_h265_pipeline_0 \
+           file://dahua_h265_pipeline_1 \
+           file://dahua_h265_pipeline_2 \
            file://econ_pipeline_0 \
-           file://econ_pipeline_0.1 \
            file://econ_pipeline_1 \
-           file://econ_pipeline_1.1 \
            file://econ_pipeline_2 \
-           file://econ_pipeline_2.1 \
+           file://econ_h264_pipeline_0 \
+           file://econ_h264_pipeline_1 \
+           file://econ_h264_pipeline_2 \
+           file://econ_h265_pipeline_0 \
+           file://econ_h265_pipeline_1 \
+           file://econ_h265_pipeline_2 \
 	"
 
 S = "${WORKDIR}"
@@ -25,10 +34,19 @@ do_install() {
 	     install -m 0755 ${S}/dahua_pipeline_0 ${D}/${bindir}
 	     install -m 0755 ${S}/dahua_pipeline_1 ${D}/${bindir}
 	     install -m 0755 ${S}/dahua_pipeline_2 ${D}/${bindir}
+	     install -m 0755 ${S}/dahua_h264_pipeline_0 ${D}/${bindir}
+	     install -m 0755 ${S}/dahua_h264_pipeline_1 ${D}/${bindir}
+	     install -m 0755 ${S}/dahua_h264_pipeline_2 ${D}/${bindir}
+	     install -m 0755 ${S}/dahua_h265_pipeline_0 ${D}/${bindir}
+	     install -m 0755 ${S}/dahua_h265_pipeline_1 ${D}/${bindir}
+	     install -m 0755 ${S}/dahua_h265_pipeline_2 ${D}/${bindir}
 	     install -m 0755 ${S}/econ_pipeline_0 ${D}/${bindir}
-	     install -m 0755 ${S}/econ_pipeline_0.1 ${D}/${bindir}
 	     install -m 0755 ${S}/econ_pipeline_1 ${D}/${bindir}
-	     install -m 0755 ${S}/econ_pipeline_1.1 ${D}/${bindir}
 	     install -m 0755 ${S}/econ_pipeline_2 ${D}/${bindir}
-	     install -m 0755 ${S}/econ_pipeline_2.1 ${D}/${bindir}
+	     install -m 0755 ${S}/econ_h264_pipeline_0 ${D}/${bindir}
+	     install -m 0755 ${S}/econ_h264_pipeline_1 ${D}/${bindir}
+	     install -m 0755 ${S}/econ_h264_pipeline_2 ${D}/${bindir}
+	     install -m 0755 ${S}/econ_h265_pipeline_0 ${D}/${bindir}
+	     install -m 0755 ${S}/econ_h265_pipeline_1 ${D}/${bindir}
+	     install -m 0755 ${S}/econ_h265_pipeline_2 ${D}/${bindir}
 }

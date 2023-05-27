@@ -181,7 +181,7 @@ CONFIG_haveged=y
 #
 # i2c-tools 
 #
-# CONFIG_i2c-tools is not set
+CONFIG_i2c-tools=y
 # CONFIG_i2c-tools-dev is not set
 # CONFIG_i2c-tools-misc is not set
 # CONFIG_i2c-tools-dbg is not set
@@ -1117,10 +1117,10 @@ CONFIG_run-postinsts=y
 #
 # tcl 
 #
-# CONFIG_tcl is not set
+CONFIG_tcl=y
 # CONFIG_tcl-dbg is not set
-# CONFIG_tcl-lib is not set
-# CONFIG_tcl-dev is not set
+CONFIG_tcl-lib=y
+CONFIG_tcl-dev=y
 
 #
 # vala 
@@ -1471,8 +1471,8 @@ CONFIG_libdfx=y
 #
 # libgpiod
 #
-# CONFIG_libgpiod is not set
-# CONFIG_libgpiod-dev is not set
+CONFIG_libgpiod=y
+CONFIG_libgpiod-dev=y
 # CONFIG_libgpiod-dbg is not set
 
 #
@@ -2448,8 +2448,8 @@ CONFIG_linux-xlnx-udev-rules=y
 #
 # iotop 
 #
-# CONFIG_iotop is not set
-# CONFIG_iotop-dev is not set
+CONFIG_iotop=y
+CONFIG_iotop-dev=y
 # CONFIG_iotop-dbg is not set
 
 #
@@ -4124,9 +4124,12 @@ CONFIG_r5=y
 #
 # user packages 
 #
+CONFIG_libgpiod-tools=y
 # CONFIG_dummy is not set
 # CONFIG_gpio-demo is not set
+CONFIG_iperf3=y
 # CONFIG_peekpoke is not set
+CONFIG_phytool=y
 
 #
 # PetaLinux RootFS Settings

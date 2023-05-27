@@ -9,6 +9,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
   
 SRC_URI = "file://bootscript \
         file://bootscript.service \
+        file://econ_init_0 \
+        file://econ_init_1 \
+        file://econ_init_2 \
 "
   
 S = "${WORKDIR}"
@@ -17,6 +20,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
   
 inherit update-rc.d systemd
   
+RDEPENDS:${PN} = "tcl"
 INITSCRIPT_NAME = "bootscript"
 INITSCRIPT_PARAMS = "start 99 S ."
   
@@ -32,6 +36,9 @@ do_install() {
   
         install -d ${D}${bindir}
         install -m 0755 ${WORKDIR}/bootscript ${D}${bindir}/
+        install -m 0755 ${WORKDIR}/econ_init_0 ${D}${bindir}/
+        install -m 0755 ${WORKDIR}/econ_init_1 ${D}${bindir}/
+        install -m 0755 ${WORKDIR}/econ_init_2 ${D}${bindir}/
         install -d ${D}${systemd_system_unitdir}
         install -m 0644 ${WORKDIR}/bootscript.service ${D}${systemd_system_unitdir}
 }

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+media-ctl -d /dev/media0 --set-v4l '"80180000.Econ_Fifo_To_Axis":0 [fmt:UYVY8_1X16/1920x1080]'
+gst-launch-1.0 -v v4l2src io-mode=4 device=/dev/video3 ! video/x-raw,format=NV16,width=1920,height=1080 ! tee name=t \
+t. ! queue ! omxh265enc target-bitrate=4000 ! rtph265pay ! udpsink host=10.233.1.67 port=5002 \
+t. ! queue ! fpsdisplaysink video-sink=fakesink sync=false

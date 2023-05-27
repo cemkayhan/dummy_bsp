@@ -1,15 +1,225 @@
-/include/ "system-conf.dtsi"                                                                                                                                                                  
-/ {                                                                                                                                                                                           
-  chosen {                                                                                                                                                                                    
-    bootargs = "earlycon clk_ignore_unused cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.67:/mnt/nfsroot,nfsvers=3,tcp ip=10.233.1.188:10.233.1.67::255.255.255.0::eth0:off";
-  };                                                                                                                                                                                          
-
-  aliases {
-    /delete-property/ i2c0;
+/include/ "system-conf.dtsi"
+/ {
+  chosen {
+    //bootargs = "initcall_debug=1 ignore_loglevel=1 earlycon clk_ignore_unused cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.67:/mnt/nfsroot,nfsvers=3,tcp ip=10.233.1.188:10.233.1.67::255.255.255.0::eth1:off";
+    bootargs = "earlycon clk_ignore_unused cpuidle.off=1 root=/dev/nfs rw nfsroot=10.233.1.67:/mnt/nfsroot,nfsvers=3,tcp ip=10.233.1.188:10.233.1.67::255.255.255.0::eth1:off";
   };
+  //aliases {
+  //  /delete-property/ i2c0;
+  //};
 };
 
-/delete-node/ &i2c1;
+///delete-node/ &i2c1;
+
+&gem2 {
+    phy-handle = <&phy1>;
+    phy-mode = "gmii";
+    status = "okay";
+    xlnx,ptp-enet-clock = <0x0>;
+    gmii2rgmii-phy-handle = <&gmii_to_rgmii_0>;
+    psu_ethernet_2_mdio: mdio {
+      #address-cells = <1>;
+      #size-cells = <0>;
+      gmii_to_rgmii_0: gmii_to_rgmii_0@8 {
+          compatible = "xlnx,gmii-to-rgmii-1.0";
+          phy-handle = <&phy1>;
+          reg = <8>;
+      };
+      phy1: phy@3 {
+          phy-mode = "rgmii-id";
+          reset-gpios = <&gpio 90 1>;
+          reset-assert-us = <1000>;
+          reset-deassert-us = <2000>;
+          reg = <3>;
+      };
+    };
+};
+
+&i2c1 {
+  status = "okay";
+  clock-frequency = <100000>;
+  //som_mac_eeprom: eeprom@50 {
+  //  compatible = "at,24c08";
+  //  reg = <0x50>;
+  //};
+  i2c-mux@70 { /* U7 on UZ3EG SOM, U8 on UZ7EV SOM */
+    compatible = "nxp,pca9543";
+    #address-cells = <1>;
+    #size-cells = <0>;
+    reg = <0x70>;
+    //i2c-mux-idle-disconnect;
+    i2c@0 { /* i2c mw 70 0 1 */
+      #address-cells = <1>;
+      #size-cells = <0>;
+      reg = <0>;
+      //pl_mac: eeprom@50 {
+      //  compatible = "at,24c08";
+      //  reg = <0x50>;
+      //};
+      //ps_mac: eeprom@53 {
+      //  compatible = "at,24c08";
+      //  reg = <0x53>;
+      //};
+      gpio@21 {
+        compatible = "nxp,pca9555";
+        reg = <0x21>;
+        gpio-controller;
+        #gpio-cells = <2>;
+
+        p0 {
+          gpio-hog;
+          gpios = <0 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "t1d2en_3";
+        };
+        p1 {
+          gpio-hog;
+          gpios = <1 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "t1d2diag_3";
+        };
+        p10 {
+          gpio-hog;
+          gpios = <8 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "t1d2en_1";
+        };
+        p11 {
+          gpio-hog;
+          gpios = <9 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "t1d2diag_1";
+        };
+        p12 {
+          gpio-hog;
+          gpios = <10 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "t1d2en_2";
+        };
+        p13 {
+          gpio-hog;
+          gpios = <11 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "t1d2diag_2";
+        };
+        p14 {
+          gpio-hog;
+          gpios = <12 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "t1d8en_3";
+        };
+        p15 {
+          gpio-hog;
+          gpios = <13 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "t1d8diag_3";
+        };
+        p16 {
+          gpio-hog;
+          gpios = <14 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "t1d8en_2";
+        };
+        p17 {
+          gpio-hog;
+          gpios = <15 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "t1d8diag_2";
+        };
+      };
+      gpio@24 {
+        compatible = "nxp,pca9555";
+        reg = <0x24>;
+        gpio-controller;
+        #gpio-cells = <2>;
+
+        p10 {
+          gpio-hog;
+          gpios = <8 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "tpen_3";
+        };
+        p11 {
+          gpio-hog;
+          gpios = <9 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "tpdiag_3";
+        };
+        p12 {
+          gpio-hog;
+          gpios = <10 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "tpen_2";
+        };
+        p13 {
+          gpio-hog;
+          gpios = <11 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "tpdiag_2";
+        };
+        p14 {
+          gpio-hog;
+          gpios = <12 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "t1d8diag_1";
+        };
+        p15 {
+          gpio-hog;
+          gpios = <13 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "t1d8en_1";
+        };
+        p16 {
+          gpio-hog;
+          gpios = <14 GPIO_ACTIVE_HIGH>;
+          input;
+          line-name = "tpdiag_1";
+        };
+        p17 {
+          gpio-hog;
+          gpios = <15 GPIO_ACTIVE_HIGH>;
+          output-high;
+          line-name = "tpen_1";
+        };
+      };
+      i2c-mux@73 {
+        compatible = "nxp,pca9545";
+        #address-cells = <1>;
+        #size-cells = <0>;
+        reg = <0x73>;
+        i2c@0 {
+          eeprom@42 {
+            compatible = "at,24c08";
+            reg = <0x42>;
+          };
+        };
+        i2c@1 {
+          eeprom@42 {
+            compatible = "at,24c08";
+            reg = <0x42>;
+          };
+        };
+        i2c@2 {
+          eeprom@42 {
+            compatible = "at,24c08";
+            reg = <0x42>;
+          };
+        };
+        //i2c@3 {
+        //  eeprom@42 {
+        //    compatible = "at,24c08";
+        //    reg = <0x42>;
+        //  };
+        //};
+      };
+    };
+    //som_i2c_mux_slv1: i2c@1 {
+    //  #address-cells = <1>;
+    //  #size-cells = <0>;
+    //  reg = <1>;
+    //};
+  };
+};
 
 #include <dt-bindings/media/xilinx-vip.h>
 
@@ -371,4 +581,4 @@
       xlnx,ipi-id = <1>;
     };
   };
-}; 
+};
