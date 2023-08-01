@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+
+log_user 0
+
+set chip [lindex $argv 0]
+set gpio [lindex [split [lindex $argv 1] =] 0]
+set value [lindex [split [lindex $argv 1] =] 1]
+
+if {$value!={}} {
+  spawn -noecho gpioset -i -c $chip $gpio=[expr {$value&0x1}]
+  expect "gpioset>"
+  close
+}
+exec gpioget -a --numeric -c $chip $gpio >@stdout

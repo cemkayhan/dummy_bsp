@@ -1,0 +1,3 @@
+#!/bin/sh
+
+gpio gpiochip1 100=1
