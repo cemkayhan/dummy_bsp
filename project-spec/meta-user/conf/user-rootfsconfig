@@ -10,3 +10,5 @@ CONFIG_pipelines
 CONFIG_iperf3
 CONFIG_phytool
 CONFIG_libgpiod-tools
+CONFIG_gpio
+CONFIG_gmiimux

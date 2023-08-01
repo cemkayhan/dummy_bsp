@@ -4118,6 +4118,8 @@ CONFIG_Init-manager-systemd=y
 # apps 
 #
 CONFIG_bootscript=y
+CONFIG_gmiimux=y
+CONFIG_gpio=y
 CONFIG_pipelines=y
 CONFIG_r5=y
 
